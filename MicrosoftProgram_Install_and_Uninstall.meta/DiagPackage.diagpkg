@@ -1,0 +1,418 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<dcmPS:DiagnosticPackage SchemaVersion="1.0" Localized="true" xmlns:dcmPS="http://www.microsoft.com/schemas/dcm/package/2007" xmlns:dcmRS="http://www.microsoft.com/schemas/dcm/resource/2007">
+  <DiagnosticIdentification>
+    <ID>B4164D8C-3813-495A-BBBC-BA51D122A226</ID>
+    <Version>1.3</Version>
+  </DiagnosticIdentification>
+  <DisplayInformation>
+    <Parameters />
+    <Name>@DiagPackage.dll,-10000</Name>
+    <Description>@DiagPackage.dll,-10001</Description>
+  </DisplayInformation>
+  <PrivacyLink>http://www.microsoft.com</PrivacyLink>
+  <PowerShellVersion>1.0</PowerShellVersion>
+  <SupportedOSVersion clientSupported="true" serverSupported="true">6.1</SupportedOSVersion>
+  <Troubleshooter>
+    <Script>
+      <Parameters>
+        <Parameter>
+          <Name>ScriptName</Name>
+          <DefaultValue>MF_WindowsInstaller.ps1</DefaultValue>
+        </Parameter>
+      </Parameters>
+      <ProcessArchitecture>Any</ProcessArchitecture>
+      <RequiresElevation>true</RequiresElevation>
+      <RequiresInteractivity>true</RequiresInteractivity>
+      <FileName>Win8GlobalDetector.ps1</FileName>
+      <ExtensionPoint />
+    </Script>
+    <ExtensionPoint />
+  </Troubleshooter>
+  <Rootcauses>
+    <Rootcause>
+      <ID>RC_Wow64Detect</ID>
+      <DisplayInformation>
+        <Parameters />
+        <Name>@DiagPackage.dll,-10002</Name>
+        <Description>@DiagPackage.dll,-10003</Description>
+      </DisplayInformation>
+      <Resolvers>
+        <Resolver>
+          <ID>RS_Wow64Detect</ID>
+          <DisplayInformation>
+            <Parameters />
+            <Name>@DiagPackage.dll,-10004</Name>
+            <Description>@DiagPackage.dll,-10005</Description>
+          </DisplayInformation>
+          <RequiresConsent>false</RequiresConsent>
+          <Script>
+            <Parameters>
+              <Parameter>
+                <Name>ScriptName</Name>
+                <DefaultValue>RS_Wow64Detect.ps1</DefaultValue>
+              </Parameter>
+              <Parameter>
+                <Name>PackageGUID</Name>
+                <DefaultValue>B4164D8C-3813-495A-BBBC-BA51D122A226</DefaultValue>
+              </Parameter>
+              <Parameter>
+                <Name>CreateRestorePoint</Name>
+                <DefaultValue>true</DefaultValue>
+              </Parameter>
+            </Parameters>
+            <ProcessArchitecture>Any</ProcessArchitecture>
+            <RequiresElevation>true</RequiresElevation>
+            <RequiresInteractivity>false</RequiresInteractivity>
+            <FileName>Win8RC.RS.ps1</FileName>
+            <ExtensionPoint />
+          </Script>
+          <ExtensionPoint>
+            <InteractionIDList />
+          </ExtensionPoint>
+        </Resolver>
+      </Resolvers>
+      <Verifier>
+        <Script>
+          <Parameters>
+            <Parameter>
+              <Name>ScriptName</Name>
+              <DefaultValue>TS_Wow64Detect.ps1</DefaultValue>
+            </Parameter>
+          </Parameters>
+          <ProcessArchitecture>Any</ProcessArchitecture>
+          <RequiresElevation>true</RequiresElevation>
+          <RequiresInteractivity>false</RequiresInteractivity>
+          <FileName>Win8RC.VF.ps1</FileName>
+          <ExtensionPoint />
+        </Script>
+        <ExtensionPoint />
+      </Verifier>
+      <ContextParameters />
+      <ExtensionPoint />
+    </Rootcause>
+    <Rootcause>
+      <ID>RC_RapidProductRemoval</ID>
+      <DisplayInformation>
+        <Parameters />
+        <Name>@DiagPackage.dll,-10006</Name>
+        <Description>@DiagPackage.dll,-10007</Description>
+      </DisplayInformation>
+      <Resolvers>
+        <Resolver>
+          <ID>RS_RapidProductRemoval</ID>
+          <DisplayInformation>
+            <Parameters>
+              <Parameter>
+                <Name>ProductCode</Name>
+                <DefaultValue />
+              </Parameter>
+              <Parameter>
+                <Name>ProductName</Name>
+                <DefaultValue />
+              </Parameter>
+              <Parameter>
+                <Name>RS_RapidProductRemoval_Dialog_Title</Name>
+                <DefaultValue />
+              </Parameter>
+              <Parameter>
+                <Name>RS_RapidProductRemoval_Dialog_SubTitle</Name>
+                <DefaultValue />
+              </Parameter>
+            </Parameters>
+            <Name>@DiagPackage.dll,-10008</Name>
+            <Description>@DiagPackage.dll,-10009</Description>
+          </DisplayInformation>
+          <RequiresConsent>false</RequiresConsent>
+          <Script>
+            <Parameters>
+              <Parameter>
+                <Name>ProductCode</Name>
+                <DefaultValue />
+              </Parameter>
+              <Parameter>
+                <Name>ProductName</Name>
+                <DefaultValue />
+              </Parameter>
+              <Parameter>
+                <Name>ScriptName</Name>
+                <DefaultValue>RS_RapidProductRemoval.ps1</DefaultValue>
+              </Parameter>
+              <Parameter>
+                <Name>PackageGUID</Name>
+                <DefaultValue>B4164D8C-3813-495A-BBBC-BA51D122A226</DefaultValue>
+              </Parameter>
+              <Parameter>
+                <Name>CreateRestorePoint</Name>
+                <DefaultValue>true</DefaultValue>
+              </Parameter>
+            </Parameters>
+            <ProcessArchitecture>Any</ProcessArchitecture>
+            <RequiresElevation>true</RequiresElevation>
+            <RequiresInteractivity>true</RequiresInteractivity>
+            <FileName>Win8RC.RS.ps1</FileName>
+            <ExtensionPoint />
+          </Script>
+          <ExtensionPoint>
+            <InteractionIDList />
+          </ExtensionPoint>
+        </Resolver>
+      </Resolvers>
+      <Verifier>
+        <Script>
+          <Parameters>
+            <Parameter>
+              <Name>ProductCode</Name>
+              <DefaultValue>0</DefaultValue>
+            </Parameter>
+            <Parameter>
+              <Name>ScriptName</Name>
+              <DefaultValue>VF_RapidProductRemoval.ps1</DefaultValue>
+            </Parameter>
+          </Parameters>
+          <ProcessArchitecture>Any</ProcessArchitecture>
+          <RequiresElevation>true</RequiresElevation>
+          <RequiresInteractivity>false</RequiresInteractivity>
+          <FileName>Win8RC.VF.ps1</FileName>
+          <ExtensionPoint />
+        </Script>
+        <ExtensionPoint />
+      </Verifier>
+      <ContextParameters />
+      <ExtensionPoint />
+    </Rootcause>
+    <Rootcause>
+      <ID>RC_MissingPatchCache</ID>
+      <DisplayInformation>
+        <Parameters />
+        <Name>@DiagPackage.dll,-10010</Name>
+        <Description>@DiagPackage.dll,-10011</Description>
+      </DisplayInformation>
+      <Resolvers>
+        <Resolver>
+          <ID>RS_MissingPatchCache</ID>
+          <DisplayInformation>
+            <Parameters />
+            <Name>@DiagPackage.dll,-10012</Name>
+            <Description>@DiagPackage.dll,-10013</Description>
+          </DisplayInformation>
+          <RequiresConsent>false</RequiresConsent>
+          <Script>
+            <Parameters>
+              <Parameter>
+                <Name>ScriptName</Name>
+                <DefaultValue>RS_MissingPatchCache.ps1</DefaultValue>
+              </Parameter>
+              <Parameter>
+                <Name>PackageGUID</Name>
+                <DefaultValue>B4164D8C-3813-495A-BBBC-BA51D122A226</DefaultValue>
+              </Parameter>
+              <Parameter>
+                <Name>CreateRestorePoint</Name>
+                <DefaultValue>true</DefaultValue>
+              </Parameter>
+            </Parameters>
+            <ProcessArchitecture>Any</ProcessArchitecture>
+            <RequiresElevation>true</RequiresElevation>
+            <RequiresInteractivity>false</RequiresInteractivity>
+            <FileName>Win8RC.RS.ps1</FileName>
+            <ExtensionPoint />
+          </Script>
+          <ExtensionPoint />
+        </Resolver>
+      </Resolvers>
+      <Verifier>
+        <Script>
+          <Parameters>
+            <Parameter>
+              <Name>ScriptName</Name>
+              <DefaultValue>TS_MissingPatchCache.ps1</DefaultValue>
+            </Parameter>
+          </Parameters>
+          <ProcessArchitecture>Any</ProcessArchitecture>
+          <RequiresElevation>true</RequiresElevation>
+          <RequiresInteractivity>false</RequiresInteractivity>
+          <FileName>Win8RC.VF.ps1</FileName>
+          <ExtensionPoint />
+        </Script>
+        <ExtensionPoint />
+      </Verifier>
+      <ContextParameters />
+      <ExtensionPoint />
+    </Rootcause>
+  </Rootcauses>
+  <Interactions>
+    <SingleResponseInteractions>
+      <SingleResponseInteraction>
+        <AllowDynamicResponses>true</AllowDynamicResponses>
+        <Choices />
+        <ID>IID_ProductRemoval</ID>
+        <DisplayInformation>
+          <Parameters>
+            <Parameter>
+              <Name>IID_ProductRemoval_Dialog</Name>
+              <DefaultValue />
+            </Parameter>
+            <Parameter>
+              <Name>IID_ProductRemoval_Dialog_Title</Name>
+              <DefaultValue />
+            </Parameter>
+          </Parameters>
+          <Name>@DiagPackage.dll,-10014</Name>
+          <Description>@DiagPackage.dll,-10015</Description>
+        </DisplayInformation>
+        <ContextParameters />
+        <ExtensionPoint />
+      </SingleResponseInteraction>
+      <SingleResponseInteraction>
+        <AllowDynamicResponses>false</AllowDynamicResponses>
+        <Choices>
+          <Choice>
+            <DisplayInformation>
+              <Parameters />
+              <Name>@DiagPackage.dll,-10016</Name>
+              <Description />
+            </DisplayInformation>
+            <Value>True</Value>
+            <ExtensionPoint />
+          </Choice>
+          <Choice>
+            <DisplayInformation>
+              <Parameters />
+              <Name>@DiagPackage.dll,-10017</Name>
+              <Description />
+            </DisplayInformation>
+            <Value>False</Value>
+            <ExtensionPoint />
+          </Choice>
+        </Choices>
+        <ID>IID_Install_Type</ID>
+        <DisplayInformation>
+          <Parameters>
+            <Parameter>
+              <Name>ProductCode</Name>
+              <DefaultValue />
+            </Parameter>
+            <Parameter>
+              <Name>ProductName</Name>
+              <DefaultValue />
+            </Parameter>
+            <Parameter>
+              <Name>RS_RapidProductRemoval_Dialog_Title</Name>
+              <DefaultValue />
+            </Parameter>
+            <Parameter>
+              <Name>RS_RapidProductRemoval_Dialog_SubTitle</Name>
+              <DefaultValue />
+            </Parameter>
+          </Parameters>
+          <Name>@DiagPackage.dll,-10018</Name>
+          <Description>@DiagPackage.dll,-10019</Description>
+        </DisplayInformation>
+        <ContextParameters />
+        <ExtensionPoint>
+          <CommandLinks />
+        </ExtensionPoint>
+      </SingleResponseInteraction>
+      <SingleResponseInteraction>
+        <AllowDynamicResponses>false</AllowDynamicResponses>
+        <Choices>
+          <Choice>
+            <DisplayInformation>
+              <Parameters />
+              <Name>@DiagPackage.dll,-10020</Name>
+              <Description />
+            </DisplayInformation>
+            <Value>Install</Value>
+            <ExtensionPoint />
+          </Choice>
+          <Choice>
+            <DisplayInformation>
+              <Parameters />
+              <Name>@DiagPackage.dll,-10021</Name>
+              <Description />
+            </DisplayInformation>
+            <Value>Uninstall</Value>
+            <ExtensionPoint />
+          </Choice>
+        </Choices>
+        <ID>IID_Install_Uninstall</ID>
+        <DisplayInformation>
+          <Parameters />
+          <Name>@DiagPackage.dll,-10022</Name>
+          <Description />
+        </DisplayInformation>
+        <ContextParameters />
+        <ExtensionPoint>
+          <CommandLinks />
+        </ExtensionPoint>
+      </SingleResponseInteraction>
+      <SingleResponseInteraction>
+        <AllowDynamicResponses>false</AllowDynamicResponses>
+        <Choices>
+          <Choice>
+            <DisplayInformation>
+              <Parameters />
+              <Name>@DiagPackage.dll,-10023</Name>
+              <Description />
+            </DisplayInformation>
+            <Value>YES</Value>
+            <ExtensionPoint />
+          </Choice>
+          <Choice>
+            <DisplayInformation>
+              <Parameters />
+              <Name>@DiagPackage.dll,-10024</Name>
+              <Description />
+            </DisplayInformation>
+            <Value>NO</Value>
+            <ExtensionPoint />
+          </Choice>
+        </Choices>
+        <ID>ID_DidRPRWork</ID>
+        <DisplayInformation>
+          <Parameters />
+          <Name>@DiagPackage.dll,-10025</Name>
+          <Description />
+        </DisplayInformation>
+        <ContextParameters />
+        <ExtensionPoint>
+          <CommandLinks />
+        </ExtensionPoint>
+      </SingleResponseInteraction>
+    </SingleResponseInteractions>
+    <MultipleResponseInteractions />
+    <TextInteractions>
+      <TextInteraction>
+        <RegularExpression />
+        <ID>IID_ManualProductRemoval</ID>
+        <DisplayInformation>
+          <Parameters />
+          <Name>@DiagPackage.dll,-10026</Name>
+          <Description>@DiagPackage.dll,-10027</Description>
+        </DisplayInformation>
+        <ContextParameters />
+        <ExtensionPoint>
+          <EditMode>Single</EditMode>
+          <NoCache />
+        </ExtensionPoint>
+      </TextInteraction>
+    </TextInteractions>
+    <PauseInteractions>
+      <PauseInteraction>
+        <ID>IID_Incorrect_GUID</ID>
+        <DisplayInformation>
+          <Parameters />
+          <Name>@DiagPackage.dll,-10028</Name>
+          <Description>@DiagPackage.dll,-10029</Description>
+        </DisplayInformation>
+        <ContextParameters />
+        <ExtensionPoint>
+          <EditMode>Single</EditMode>
+          <NoCache />
+        </ExtensionPoint>
+      </PauseInteraction>
+    </PauseInteractions>
+    <LaunchUIInteractions />
+  </Interactions>
+  <ExtensionPoint />
+</dcmPS:DiagnosticPackage>

@@ -1,0 +1,149 @@
+<Shim>
+  <Product>
+    <ProductCode>{CE2CDD62-0124-36CA-84D3-9F4DCF5C5BD9}</ProductCode>
+    <ProductName>Microsoft .NET Framework 3.5 SP1</ProductName>
+    <OS Build="5.1.2600">
+      <Language Code="ALL">
+        <Registry>
+          <RegistryHive Action="*">
+            <RegistryValue>HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Microsoft .NET Framework 3.5 SP1</RegistryValue>
+            <RegistryValue>HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\NET Framework Setup\NDP\v2.0.50727</RegistryValue>
+            <RegistryValue>HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\NET Framework Setup\NDP\v3.5</RegistryValue>
+          </RegistryHive>
+          <RegistryHive Action="-">
+            <RegistryValue></RegistryValue>
+          </RegistryHive>
+        </Registry>
+      </Language>
+    </OS>
+    <OS Build="6.0.6001">
+      <Language Code="ALL">
+        <Registry>
+          <RegistryHive Action="*">
+            <RegistryValue>HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Microsoft .NET Framework 3.5 SP1</RegistryValue>
+            <RegistryValue>HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\NET Framework Setup\NDP\v3.5</RegistryValue>
+          </RegistryHive>
+          <RegistryHive Action="-">
+            <RegistryValue></RegistryValue>
+          </RegistryHive>
+        </Registry>
+      </Language>
+    </OS>
+    <OS Build="6.0.6002">
+      <Language Code="ALL">
+        <Registry>
+          <RegistryHive Action="*">
+            <RegistryValue>HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Microsoft .NET Framework 3.5 SP1</RegistryValue>
+            <RegistryValue>HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\NET Framework Setup\NDP\v3.5</RegistryValue>
+          </RegistryHive>
+          <RegistryHive Action="-">
+            <RegistryValue></RegistryValue>
+          </RegistryHive>
+        </Registry>
+      </Language>
+    </OS>
+    <OS Build="6.0.6000">
+      <Language Code="ALL">
+        <Registry>
+          <RegistryHive Action="*">
+            <RegistryValue>HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Microsoft .NET Framework 3.5 SP1</RegistryValue>
+            <RegistryValue>HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\NET Framework Setup\NDP\v3.5</RegistryValue>
+          </RegistryHive>
+          <RegistryHive Action="-">
+            <RegistryValue></RegistryValue>
+          </RegistryHive>
+        </Registry>
+      </Language>
+    </OS>
+    <ProductCode>{774088D4-0777-4D78-904D-E435B318F5D2}</ProductCode>
+    <ProductName>Microsoft Antimalware</ProductName>
+    <OS Build="ALL">
+      <Language Code="ALL">
+        <Registry>
+          <RegistryHive Action="*">
+            <RegistryValue>HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Microsoft Antimalware</RegistryValue>
+            <RegistryValue>HKEY_CLASSES_ROOT\Installer\UpgradeCodes\1F69ACF0D1CF2B7418F292F0E05EC20B</RegistryValue>
+          </RegistryHive>
+          <RegistryHive Action="-">
+            <RegistryValue></RegistryValue>
+          </RegistryHive>
+        </Registry>
+        <Services>
+          <Service>Microsoft Antimalware Service</Service>
+        </Services>
+      </Language>
+    </OS>
+    <ProductCode>{50779A29-834E-4E36-BBEB-B7CABC67A825}</ProductCode>
+    <ProductName>Microsoft Security Client JA-JP Language Pack</ProductName>
+    <OS Build="ALL">
+      <Language Code="ALL">
+        <Registry>
+          <RegistryHive Action="*">
+            <RegistryValue>HKEY_CLASSES_ROOT\Installer\UpgradeCodes\18EAFAA8B504E9C4781184E19FC7A0F8</RegistryValue>
+          </RegistryHive>
+          <RegistryHive Action="-">
+            <RegistryValue></RegistryValue>
+          </RegistryHive>
+        </Registry>
+        <Services>
+          <Service>Microsoft Antimalware Service</Service>
+        </Services>
+      </Language>
+    </OS>
+    <ProductCode>{05BFB060-4F22-4710-B0A2-2801A1B606C5}</ProductCode>
+    <ProductName>Microsoft Antimalware</ProductName>
+    <OS Build="ALL">
+      <Language Code="ALL">
+        <Registry>
+          <RegistryHive Action="*">
+            <RegistryValue>HKEY_CLASSES_ROOT\Installer\UpgradeCodes\1F69ACF0D1CF2B7418F292F0E05EC20B</RegistryValue>
+          </RegistryHive>
+          <RegistryHive Action="-">
+            <RegistryValue></RegistryValue>
+          </RegistryHive>
+        </Registry>
+        <Services>
+          <Service>Microsoft Antimalware Service</Service>
+        </Services>
+      </Language>
+    </OS>
+    <ProductCode>{3B1E1F4C-031D-410F-A93A-1220236608C8}</ProductCode>
+    <ProductName>Microsoft Antimalware Service JA-JP Language Pack</ProductName>
+    <OS Build="ALL">
+      <Language Code="ALL">
+        <Registry>
+          <RegistryHive Action="*">
+            <RegistryValue>HKEY_CLASSES_ROOT\Installer\UpgradeCodes\307BC1C5473CE634DB482731070ADD5C</RegistryValue>
+          </RegistryHive>
+          <RegistryHive Action="-">
+            <RegistryValue></RegistryValue>
+          </RegistryHive>
+        </Registry>
+        <Services>
+          <Service>Microsoft Antimalware Service</Service>
+        </Services>
+      </Language>
+    </OS>
+    <ProductCode>{54B6DC7D-8C5B-4DFB-BC15-C010A3326B2B}</ProductCode>
+    <ProductName>Microsoft Security Client</ProductName>
+    <OS Build="ALL">
+      <Language Code="ALL">
+        <Registry>
+          <RegistryHive Action="*">
+            <RegistryValue>HKEY_CLASSES_ROOT\Installer\UpgradeCodes\11BB99F8B7FD53D4398442FBBAEF050F</RegistryValue>
+          </RegistryHive>
+          <RegistryHive Action="-">
+            <RegistryValue></RegistryValue>
+          </RegistryHive>
+        </Registry>
+        <Services>
+          <Service>Microsoft Antimalware Service</Service>
+        </Services>
+      </Language>
+    </OS>
+
+  </Product>
+
+</Shim>
+
+
