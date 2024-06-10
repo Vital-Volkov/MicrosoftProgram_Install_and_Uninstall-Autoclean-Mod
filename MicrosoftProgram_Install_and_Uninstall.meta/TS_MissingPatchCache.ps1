@@ -16,19 +16,21 @@
 # CONNECTION WITH THE USE OF THIS CODE AND INFORMATION REMAINS WITH THE USER.
 #################################################################################
 
-if(Test-Path ".\VF_HAS_RAN.Mark" -PathType Leaf)
-{
-    $result = gc .\VF_HAS_RAN.Mark
-    if($result -ieq "true")
-    {
-        update-diagrootcause -Id RC_MissingPatchCache -detected $true
-    }
-    else
-    {
-        update-diagrootcause -Id RC_MissingPatchCache -detected $false
-    }
-    return
-}
+Write-Host "TS_MissingPatchCache.ps1"
+
+#if(Test-Path ".\VF_HAS_RAN.Mark" -PathType Leaf)
+#{
+#    $result = gc .\VF_HAS_RAN.Mark
+#    if($result -ieq "true")
+#    {
+#        update-diagrootcause -Id RC_MissingPatchCache -detected $true
+#    }
+#    else
+#    {
+#        update-diagrootcause -Id RC_MissingPatchCache -detected $false
+#    }
+#    return
+#}
 
 . .\MSIMATSFN.ps1
 
@@ -36,10 +38,10 @@ Import-LocalizedData -BindingVariable LocalizedStrings -FileName Strings
 
 $RootCauseID = "RC_MissingPatchCache"
 
-Write-DiagProgress -Activity $LocalizedStrings.WindowsInstaller_IID_Checking_the_registry_for_Patch_related_problems 
-$detect = FixPatchTSRS (SortArray) "TS"
+#Write-DiagProgress -Activity $LocalizedStrings.WindowsInstaller_IID_Checking_the_registry_for_Patch_related_problems 
+#$detect = FixPatchTSRS (SortArray) "TS"
 
-update-diagrootcause -Id $RootCauseId -detected $detect
+#update-diagrootcause -Id $RootCauseId -detected $detect
 
 if(Test-Path ".\TS_HAS_RAN.Mark" -PathType Leaf)
 {

@@ -17,6 +17,9 @@
 #################################################################################
 
 PARAM ($ProductCode, $ProductName)
+Write-Host "RS_RapidProductRemoval.ps1 $ProductCode $ProductName"
+#pause
+#break;
 
 . .\MSIMATSFN.ps1
 
@@ -30,15 +33,15 @@ if ($ProductCode)
 	MATSFingerPrint $ProductCode "ProductName" $ProductName $DateTimeRun
 	$root=$Env:SystemDrive
 	$DirectoryPath= $root+"\MATS\$ProductCode"
-	Write-DiagProgress -Activity ($LocalizedStrings.WindowsInstaller_IID_Attempting_to_uninstall +" " + $ProductName)
+	#Write-DiagProgress -Activity ($LocalizedStrings.WindowsInstaller_IID_Attempting_to_uninstall +" " + $ProductName)
 	$value=[UninstallProduct2]::LogandUninstallProduct($ProductCode) #Uninstall with the Windows Installer -x switch first
 	MATSFingerPrint $ProductCode "msiexec -x" $value $DateTimeRun
 	if ($value -ne "0")
 	{ 
 	    #We failed with a normal Windows Installer uninstall so we will proceed to remove the productcode guids from registry
-        Write-DiagProgress -Activity ($LocalizedStrings.WindowsInstaller_IID_Attempting_to_resolve_problems_with+" " + $ProductName)
+        #Write-DiagProgress -Activity ($LocalizedStrings.WindowsInstaller_IID_Attempting_to_resolve_problems_with+" " + $ProductName)
         [Restore]::StartRestore((($LocalizedStrings.WindowsInstaller_IID_Restore_Point_before)+" "+ $ProductName+" "+ ($LocalizedStrings.WindowsInstaller_IID_was_removed_using_Program_Install_and_Uninstall_troubleshooter))) #System Restore
-	    Write-DiagProgress -Activity ($LocalizedStrings.WindowsInstaller_IID_Attempting_to_resolve_problems_with+" " + $ProductName)
+	    #Write-DiagProgress -Activity ($LocalizedStrings.WindowsInstaller_IID_Attempting_to_resolve_problems_with+" " + $ProductName)
 	    RapidProductRegistryRemove $ProductCode
 		MATSFingerPrint $ProductCode "RPR" $true $DateTimeRun
         
@@ -57,7 +60,7 @@ if ($ProductCode)
              
              if(test-path $DirectoryPath\registryBackupTemplate.xml)
              {
-			    update-diagreport -File "$DirectoryPath\registryBackupTemplate.xml" -Id "RC_RapidProductRemoval" -Name "Registry Backup" -Description $LocalizedStrings.WindowsInstaller_IID_This_XML_document_contains_the_registry_backup_for_the_product_removed
+			    #update-diagreport -File "$DirectoryPath\registryBackupTemplate.xml" -Id "RC_RapidProductRemoval" -Name "Registry Backup" -Description $LocalizedStrings.WindowsInstaller_IID_This_XML_document_contains_the_registry_backup_for_the_product_removed
              }
                 
              if(test-path $DirectoryPath\FileBackupTemplate.xml)
@@ -67,7 +70,7 @@ if ($ProductCode)
                 
              if(test-path $DirectoryPath\RestoreYourFilesAndRegistry.ps1)
              {
-                 update-diagreport -File "$DirectoryPath\RestoreYourFilesAndRegistry.ps1" -Id "RC_RapidProductRemoval" -Name "Recovery File" -Description $LocalizedStrings.WindowsInstaller_IID_This_document_contains_the_File_and_Registry_recovery_script
+                 #update-diagreport -File "$DirectoryPath\RestoreYourFilesAndRegistry.ps1" -Id "RC_RapidProductRemoval" -Name "Recovery File" -Description $LocalizedStrings.WindowsInstaller_IID_This_document_contains_the_File_and_Registry_recovery_script
              }
 	    }
     }

@@ -17,6 +17,7 @@
 #################################################################################
 
 param ($Action)
+Write-Host "TS_RapidProductRemoval.ps1 $Action"
 
 . .\MSIMATSFN.ps1
 
@@ -39,74 +40,113 @@ else
 }
 $MarkName += [string]$ProcessID
 
-$alreadyDetected =  -not(Mark $MarkName)
-if($alreadyDetected)
-{
-}
-else
-{
+#$alreadyDetected =  -not(Mark $MarkName)
+#if($alreadyDetected)
+#{
+#}
+#else
+#{
     #FirstRun
     if ($Action -eq "Uninstall")
     {
+        Write-Host "UNINSTALL LOGIC"
         #############################################################
         ############### UNINSTALL LOGIC #############################
         #############################################################
 
         $MasterHashs = ProductListingBuild #Calls dialog to list products
         $IID_ProducttoRemove = $LocalizedStrings.WindowsInstaller_IID_Not_Listed #default
-        $IID_ProducttoRemove = Get-DiagInput -Id "IID_ProductRemoval" -Choice $MasterHashs -Parameter @{"IID_ProductRemoval_Dialog"=($LocalizedStrings.WindowsInstaller_IID_If_you_do_not_see_your_program_select_Not_Listed);"IID_ProductRemoval_Dialog_Title"=($LocalizedStrings.WindowsInstaller_IID_Select_the_program_you_want_to_uninstall)} 
+        #$IID_ProducttoRemove = Get-DiagInput -Id "IID_ProductRemoval" -Choice $MasterHashs -Parameter @{"IID_ProductRemoval_Dialog"=($LocalizedStrings.WindowsInstaller_IID_If_you_do_not_see_your_program_select_Not_Listed);"IID_ProductRemoval_Dialog_Title"=($LocalizedStrings.WindowsInstaller_IID_Select_the_program_you_want_to_uninstall)} 
 
+        #if ($IID_ProducttoRemove -ne $LocalizedStrings.WindowsInstaller_IID_Not_Listed)
+        #{
+        #    $Friendly=[MakeStringTest]::GetMSIProductInformation($IID_ProducttoRemove ,"ProductName")
+		#	if($Friendly -eq "Unknown")
+		#	{
+		#		$Friendly=$LocalizedStrings.WindowsInstaller_IID_Name_no_available #If ProductName unknown
+		#	}
+        #
+        #    $RootCauseDetected = $true #___________Hand off to RS_WindowsInstaller to fix issue ____________
+        #}
+        #else
+        #{
+        #    #Selected a product that is not listed in the Product List. So we will take a GUID
+        #    $CorrectLength="false"
+        #    while ($CorrectLength -eq "false")
+        #    {
+        #        [string]$IID_ProductRemovalReturn = Get-DiagInput -Id "IID_ManualProductRemoval" 
+        #        if ($IID_ProductRemovalReturn.Length -eq 38)
+        #        { 
+        #            $CorrectLength="true"
+        #            $IID_ProducttoRemove=$IID_ProductRemovalReturn
+        #            $Friendly=[MakeStringTest]::GetMSIProductInformation($IID_ProducttoRemove ,"ProductName")
+		#			if($Friendly -eq "Unknown")
+		#			{
+		#				$Friendly=$LocalizedStrings.WindowsInstaller_IID_Name_no_available #If ProductName unknown
+		#			}
+        #
+        #            $RootCauseDetected = $true #Hand off to RS to fix issue 
+        #        }
+        #        else
+        #        {
+        #            $Manual_TryAgain = Get-DiagInput -Id "IID_Incorrect_GUID" 
+        #        }
+        #    }
+        #}
+        #
+        #if ($Friendly.length -eq 0)
+        #{
+        #    $Friendly=$LocalizedStrings.WindowsInstaller_IID_Name_no_available #If ProductName not available
+        #}
+        #        
+        ##$IID_Install_Type_Return = Get-DiagInput -Id "IID_Install_Type" -Parameter @{"ProductCode"=$IID_ProducttoRemove;"RS_RapidProductRemoval_Dialog_SubTitle"=($LocalizedStrings.WindowsInstaller_IID_Click_cancel_to_exit_the_troubleshooter) ;"ProductName"=$Friendly;"RS_RapidProductRemoval_Dialog_Title"=($LocalizedStrings.WindowsInstaller_IID_Uninstall_and_cleanup)}
+        #if ($IID_Install_Type_Return -eq ("True"))
+        #{
+        #    #update-diagrootcause -Id "RC_RapidProductRemoval" -detected $True -Parameter @{"ProductCode"=$IID_ProducttoRemove;"RS_RapidProductRemoval_Dialog_SubTitle"=($LocalizedStrings.WindowsInstaller_IID_Click_cancel_to_exit_the_troubleshooter) ;"ProductName"=$Friendly;"RS_RapidProductRemoval_Dialog_Title"=($LocalizedStrings.WindowsInstaller_IID_Uninstall_and_cleanup)} 
+        #}
+        #else
+        #{
+        #    #update-diagrootcause -Id "RC_RapidProductRemoval" -detected $false  -Parameter @{"ProductCode"=$IID_ProducttoRemove;"RS_RapidProductRemoval_Dialog_SubTitle"=($LocalizedStrings.WindowsInstaller_IID_Click_cancel_to_exit_the_troubleshooter) ;"ProductName"=$Friendly;"RS_RapidProductRemoval_Dialog_Title"=($LocalizedStrings.WindowsInstaller_IID_Uninstall_and_cleanup)}
+        #}
 
-        if ($IID_ProducttoRemove -ne $LocalizedStrings.WindowsInstaller_IID_Not_Listed)
+        foreach ($MasterHash in $MasterHashs)
         {
-            $Friendly=[MakeStringTest]::GetMSIProductInformation($IID_ProducttoRemove ,"ProductName")
-			if($Friendly -eq "Unknown")
-			{
-				$Friendly=$LocalizedStrings.WindowsInstaller_IID_Name_no_available #If ProductName unknown
-			}
-
-            $RootCauseDetected = $true #___________Hand off to RS_WindowsInstaller to fix issue ____________
-        }
-        else
-        {
-            #Selected a product that is not listed in the Product List. So we will take a GUID
-            $CorrectLength="false"
-            while ($CorrectLength -eq "false")
+            if ($MasterHash.Name -ne "Not Listed")
             {
-                [string]$IID_ProductRemovalReturn = Get-DiagInput -Id "IID_ManualProductRemoval" 
-                if ($IID_ProductRemovalReturn.Length -eq 38)
-                { 
-                    $CorrectLength="true"
-                    $IID_ProducttoRemove=$IID_ProductRemovalReturn
-                    $Friendly=[MakeStringTest]::GetMSIProductInformation($IID_ProducttoRemove ,"ProductName")
-					if($Friendly -eq "Unknown")
-					{
-						$Friendly=$LocalizedStrings.WindowsInstaller_IID_Name_no_available #If ProductName unknown
-					}
+                $MSICount++
+                Write-Host $MSICount $MasterHash.Name $MasterHash.Value
 
-                    $RootCauseDetected = $true #Hand off to RS to fix issue 
+                $ProductPath=[MakeStringTest]::GetMSIProductInformation($MasterHash.Value, "InstallSource")
+
+                if((Test-Path $ProductPath\*.msi) -or (Test-Path $ProductPath\*.json))
+                {
+                    $ValidMSI++
+                    Write-Host "MSI OK"
                 }
                 else
                 {
-                    $Manual_TryAgain = Get-DiagInput -Id "IID_Incorrect_GUID" 
+                    $NotValidMSI++
+                    Write-Host "MSI or Json not found in $ProductPath"
+                    $IID_ProducttoRemove = $MasterHash.Value
+                    $Friendly = $MasterHash.Name
+                    #$IID_ProducttoRemove = "{1690CE56-2231-4E59-9006-A0876D949EA8}"
+                    #$Friendly="Tools for .Net 3.5"
+                    Write-Host "Product to Clean $Friendly $IID_ProducttoRemove"
+
+                    #if ($NotValidMSI -le 10)
+                    #{
+                        #Write-Host ".\RS_RapidProductRemoval.ps1 $IID_ProducttoRemove $Friendly"
+                        .\RS_RapidProductRemoval.ps1 $IID_ProducttoRemove $Friendly
+                        Write-Host "Clean End"
+                    #}
                 }
             }
         }
-    
-        if ($Friendly.length -eq 0)
-        {
-            $Friendly=$LocalizedStrings.WindowsInstaller_IID_Name_no_available #If ProductName not available
-        }
-                
-        $IID_Install_Type_Return = Get-DiagInput -Id "IID_Install_Type" -Parameter @{"ProductCode"=$IID_ProducttoRemove;"RS_RapidProductRemoval_Dialog_SubTitle"=($LocalizedStrings.WindowsInstaller_IID_Click_cancel_to_exit_the_troubleshooter) ;"ProductName"=$Friendly;"RS_RapidProductRemoval_Dialog_Title"=($LocalizedStrings.WindowsInstaller_IID_Uninstall_and_cleanup)}
-        if ($IID_Install_Type_Return -eq ("True"))
-        {
-            update-diagrootcause -Id "RC_RapidProductRemoval" -detected $True -Parameter @{"ProductCode"=$IID_ProducttoRemove;"RS_RapidProductRemoval_Dialog_SubTitle"=($LocalizedStrings.WindowsInstaller_IID_Click_cancel_to_exit_the_troubleshooter) ;"ProductName"=$Friendly;"RS_RapidProductRemoval_Dialog_Title"=($LocalizedStrings.WindowsInstaller_IID_Uninstall_and_cleanup)} 
-        }
-        else
-        {
-            update-diagrootcause -Id "RC_RapidProductRemoval" -detected $false  -Parameter @{"ProductCode"=$IID_ProducttoRemove;"RS_RapidProductRemoval_Dialog_SubTitle"=($LocalizedStrings.WindowsInstaller_IID_Click_cancel_to_exit_the_troubleshooter) ;"ProductName"=$Friendly;"RS_RapidProductRemoval_Dialog_Title"=($LocalizedStrings.WindowsInstaller_IID_Uninstall_and_cleanup)}
-        }
+
+        #.\RS_RapidProductRemoval.ps1 $IID_ProducttoRemove $Friendly
+        Write-Host "MSICount $MSICount"
+        Write-Host "ValidMSI $ValidMSI"
+        Write-Host "CleanedMSI $(0 + $NotValidMSI)"
     }
     else
     {
@@ -140,7 +180,7 @@ else
              update-diagrootcause -Id "RC_RapidProductRemoval" -detected $false -Parameter @{"ProductCode"=$IID_ProducttoRemove;"RS_RapidProductRemoval_Dialog_Title"=($LocalizedStrings.WindowsInstaller_IID_This_program_may_be_preventing_you_from_installing);"ProductName"=$Friendly;"RS_RapidProductRemoval_Dialog_SubTitle"=""}  
         }
     }
-}
+#}
 # SIG # Begin signature block
 # MIIaxwYJKoZIhvcNAQcCoIIauDCCGrQCAQExCzAJBgUrDgMCGgUAMGkGCisGAQQB
 # gjcCAQSgWzBZMDQGCisGAQQBgjcCAR4wJgIDAQAABBAfzDtgWUsITrck0sYpfvNR

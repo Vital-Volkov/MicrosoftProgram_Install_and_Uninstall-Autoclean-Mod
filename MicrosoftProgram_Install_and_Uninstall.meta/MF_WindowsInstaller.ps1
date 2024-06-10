@@ -16,18 +16,23 @@
 # CONNECTION WITH THE USE OF THIS CODE AND INFORMATION REMAINS WITH THE USER.
 #################################################################################
 
-if(Test-Path ".\TS_HAS_RAN.Mark" -PathType Leaf)
-{
-    return
-}
+Write-Host "MF_WindowsInstaller.ps1"
+
+#if(Test-Path ".\TS_HAS_RAN.Mark" -PathType Leaf)
+#{
+#    return
+#}
 
 . .\MSIMATSFN.ps1
 
-$InstallORUninstall_Return = Get-DiagInput -Id "IID_Install_Uninstall" #Install or Uninstall logic
+#$InstallORUninstall_Return = Get-DiagInput -Id "IID_Install_Uninstall" #Install or Uninstall logic
+$InstallORUninstall_Return = "Uninstall"
+#Write-Host "$InstallORUninstall_Return"
 EnableComputerRestore $Env:SystemDrive #turn on system restore
 .\TS_Wow64Detect.ps1 
 .\TS_MissingPatchCache.ps1 
 .\TS_RapidProductRemoval.ps1 $InstallORUninstall_Return 
+pause
 
 get-date | Out-File ".\TS_HAS_RAN.Mark"
 # SIG # Begin signature block

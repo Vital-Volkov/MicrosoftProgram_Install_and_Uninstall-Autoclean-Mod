@@ -15,11 +15,13 @@
 # CODE AND INFORMATION IS USED OR MODIFIED, THE ENTIRE RISK OF USE OR RESULTS IN
 # CONNECTION WITH THE USE OF THIS CODE AND INFORMATION REMAINS WITH THE USER.
 #################################################################################
+Write-Host "MSIMATSFN.ps1"
 . .\utils_SetupEnv.ps1
 . .\utils_SdpExtension.ps1
 Import-LocalizedData -BindingVariable LocalizedStrings -FileName Strings
 function ProductListingBuild
 {      
+Write-Host "ProductListingBuild"
 $MasterHash = New-Object System.Collections.ArrayList
 $path = [MakeStringTest]::loop()
 $CombinedListing = New-Object System.Collections.ArrayList
@@ -34,6 +36,7 @@ $MasterHash.Add("Value",$LocalizedStrings.WindowsInstaller_IID_Not_Listed)
 $MasterHash.Add("Description",$LocalizedStrings.WindowsInstaller_IID_Not_Listed)
 $MasterHashs+=$MasterHash
 $SortArray= new-object 'object[]' $path.Count # create array for sorting 
+$MSICount = $path.Count
  
 #Sort Products for Dialog
 $i=0
@@ -41,13 +44,33 @@ foreach ($Product in $path)
 {
 $SortArray[$i]=$Product.Name+";"+$Product.Value
 $i=$i+1
+#$ProductName = $Product.Name
+#Write-Host "$ProductName"
+#Write-Host $Product.Name
 }
+
 $SortArray=$SortArray|Sort-Object #Sort temp array
 foreach ($Product in $SortArray)
 {
 $temp=$product.indexof(";")
 $ProductCode=$product.substring($temp+1)
 $ProductName=$product.substring(0,$temp)
+#Write-Host "$Product"
+#Write-Host "$ProductCode $ProductName"
+
+$ProductPath=[MakeStringTest]::GetMSIProductInformation($ProductCode,"InstallSource")
+
+if(Test-Path $ProductPath\*.msi)
+{
+    #Write-Host "MSI Exist"
+    $ExistedMSIInstallers++
+}
+else
+{
+    #Write-Host "MSI Not Exist"
+    $NotExistedMSIInstallers++
+}
+
 $MasterHash= @{}
     #Loc code
     switch ($ProductName)
@@ -66,12 +89,15 @@ $MasterHash= @{}
     }
                  
     
- [void]$MasterHash.Add("Name",$ProductName)
+[void]$MasterHash.Add("Name",$ProductName)
 [void]$MasterHash.Add("Value",$ProductCode)
 [void]$MasterHash.Add("Description",$ProductCode)
 $MasterHashs+=$MasterHash    
 }
-     
+
+Write-Host "MSICount $MSICount"
+Write-Host "ExistedMSIInstallers $ExistedMSIInstallers"
+Write-Host "NotExistedMSIInstallers $NotExistedMSIInstallers"
 $MasterHashs 
 }
 
@@ -1232,6 +1258,7 @@ if($Items -ne $null)
 Function DeleteRegistryKeysFromXML
 {
 Param($ProductCode)
+Write-Host "DeleteRegistryKeysFromXML"
 $root=$Env:SystemDrive
 $DirectoryPath= $root+"\MATS\$ProductCode"
 New-PSDrive -Name HKCR -PSProvider registry -root HKEY_CLASSES_ROOT # Allows access to registry HKEY_CLASSES_ROOT
@@ -1391,6 +1418,7 @@ Param ($ProductCode)
 CreateRegistryFileRecoveryFile($ProductCode)
 New-PSDrive -Name HKCR -PSProvider registry -root HKEY_CLASSES_ROOT # Allows access to registry HKEY_CLASSES_ROOT
 $CompressedGUID=[CleanupRegistry]::CompressGUID([string]$ProductCode)
+Write-Host "RapidProductRegistryRemove CompressedGUID $CompressedGUID"
 if ($CompressedGUID)
 {
     ##################HKLM
@@ -1416,8 +1444,8 @@ if ($CompressedGUID)
            }
         }
    
-       del "$RegistryKey\Products\$CompressedGUID" -recurse #Special delete for parent
-  
+        Write-Host "del HKLM"
+        del "$RegistryKey\Products\$CompressedGUID" -recurse #Special delete for parent
        }
      }
 
@@ -1455,6 +1483,8 @@ if ($CompressedGUID)
                    BackupRegistry((RegistryHiveReplace $a.name) +"\RPRTAG") $False
                 }
             }
+
+            Write-Host "del HKCR"
             del "HKCR:\Installer\Products\$CompressedGUID" -recurse #Special delete for parent
         }
      }
@@ -1493,6 +1523,8 @@ if ($CompressedGUID)
                    BackupRegistry((RegistryHiveReplace $a.name) +"\RPRTAG") $False
                 }
             }
+
+            Write-Host "del HKU"
             del "HKCU:\Software\Microsoft\Installer\Products\$CompressedGUID" -recurse #Special delete for parent
         }
      }
@@ -1789,7 +1821,7 @@ Function LPR
 {
 Param($ProductCode,$ProductName,$DateTimeRun)
 MATSFingerPrint $ProductCode "LPR" $true $DateTimeRun
-Write-DiagProgress -Activity ($LocalizedStrings.WindowsInstaller_IID_Attempting_to_resolve_problems_with+" " + $ProductName) # -Status $LocalizedStrings.WindowsInstaller_IID_Examining_registry_and_files
+#Write-DiagProgress -Activity ($LocalizedStrings.WindowsInstaller_IID_Attempting_to_resolve_problems_with+" " + $ProductName) # -Status $LocalizedStrings.WindowsInstaller_IID_Examining_registry_and_files
 $alItemsToDelete= New-Object System.Collections.ArrayList($null)
 $alItemsToDelete= [ProductLPRMain]::GetComponentPath($ProductCode) #generate list of installed items
 $alItemsToDelete= $alItemsToDelete+(ShimXML($ProductCode)) #Do we have any shims If so add
@@ -1799,9 +1831,9 @@ if ($alItemsToDelete -ne $null)#If we found files and registry keys proceed
                 CheckRestorePoint $alItemsToDelete $ProductCode #If we have items to delete we will backup files and registry and create a system restore
     BackupFiles $alItemsToDelete $ProductCode #Attempting to backup all files and registry keys for selected product
                 MATSFingerPrint $ProductCode "BackupFiles" $true $DateTimeRun
-                Write-DiagProgress -Activity ($LocalizedStrings.WindowsInstaller_IID_Attempting_to_resolve_problems_with+" " + $ProductName) # -Status $LocalizedStrings.WindowsInstaller_IID_Creating_System_Restore_Checkpoint
+                #Write-DiagProgress -Activity ($LocalizedStrings.WindowsInstaller_IID_Attempting_to_resolve_problems_with+" " + $ProductName) # -Status $LocalizedStrings.WindowsInstaller_IID_Creating_System_Restore_Checkpoint
                 [Restore]::StartRestore((($LocalizedStrings.WindowsInstaller_IID_Final_Restore_Point_for+" "+ $ProductName+" "+$LocalizedStrings.WindowsInstaller_IID_using_Program_Install_and_Uninstall_troubleshooter))) #System Restore
-                Write-DiagProgress -Activity ($LocalizedStrings.WindowsInstaller_IID_Attempting_to_resolve_problems_with+" " + $ProductName) # -Status $LocalizedStrings.WindowsInstaller_IID_Performing_Full_Product_Removal
+                #Write-DiagProgress -Activity ($LocalizedStrings.WindowsInstaller_IID_Attempting_to_resolve_problems_with+" " + $ProductName) # -Status $LocalizedStrings.WindowsInstaller_IID_Performing_Full_Product_Removal
     DeleteFilesFromXML($ProductCode)
                 MATSFingerPrint $ProductCode "DeleteFiles" $True $DateTimeRun
                 DeleteRegistryKeysFromXML($ProductCode)
@@ -1836,6 +1868,7 @@ $HKLMPatchListArray
 Function CheckandFixHKCR
 {
 param ($CurrentPatchHKLMList, $CurrentPatchHKCRList, $Phase, $Deep)
+Write-Host "CheckandFixHKCR"
 Import-LocalizedData -BindingVariable LocalizedStrings -FileName Strings
 New-PSDrive -Name HKCR -PSProvider registry -root HKEY_CLASSES_ROOT |out-null # Allows access to registry HKEY_CLASSES_ROOT
 
@@ -1992,6 +2025,7 @@ If ($MSIMasterList.ContainsKey($ProductCode))
 Function FixPatchTSRS
 {
 param ($SortArray, $Phase)
+Write-Host "FixPatchTSRS"
 Import-LocalizedData -BindingVariable LocalizedStrings -FileName Strings
 New-PSDrive -Name HKCR -PSProvider registry -root HKEY_CLASSES_ROOT |out-null # Allows access to registry HKEY_CLASSES_ROOT
 WriteLog(($LocalizedStrings.WindowsInstaller_WriteLog_Start_Logging_Patch_Repair) + " " + ($Phase))  

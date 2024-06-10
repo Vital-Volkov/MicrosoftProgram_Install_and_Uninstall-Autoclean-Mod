@@ -16,17 +16,20 @@
 # CONNECTION WITH THE USE OF THIS CODE AND INFORMATION REMAINS WITH THE USER.
 #################################################################################
 
+Write-Host "TS_Wow64Detect.ps1"
 . .\MSIMATSFN.ps1
 
 $DoesExist= (Get-ItemProperty "HKLM:\SYSTEM\CurrentControlSet\Services\msiserver").Wow64
 
 If ($DoesExist -eq "1")
 {
-	Update-DiagRootCause -id RC_Wow64Detect -Detected $true
+	#Update-DiagRootCause -id RC_Wow64Detect -Detected $true
+    #Write-Host "HKLM:\SYSTEM\CurrentControlSet\Services\msiserver Exist"
 }
 else
 {
-	Update-DiagRootCause -id RC_Wow64Detect  -Detected $false
+	#Update-DiagRootCause -id RC_Wow64Detect  -Detected $false
+    #Write-Host "HKLM:\SYSTEM\CurrentControlSet\Services\msiserver Not Exist"
 }
 
 # SIG # Begin signature block
