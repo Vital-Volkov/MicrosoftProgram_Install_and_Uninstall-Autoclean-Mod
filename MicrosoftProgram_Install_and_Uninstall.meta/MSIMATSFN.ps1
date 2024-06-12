@@ -63,12 +63,12 @@ $ProductPath=[MakeStringTest]::GetMSIProductInformation($ProductCode,"InstallSou
 if(Test-Path $ProductPath\*.msi)
 {
     #Write-Host "MSI Exist"
-    $ExistedMSIInstallers++
+    $ExistedMSI++
 }
 else
 {
     #Write-Host "MSI Not Exist"
-    $NotExistedMSIInstallers++
+    $NotExistedMSI++
 }
 
 $MasterHash= @{}
@@ -95,9 +95,9 @@ $MasterHash= @{}
 $MasterHashs+=$MasterHash    
 }
 
-Write-Host "MSICount $MSICount"
-Write-Host "ExistedMSIInstallers $ExistedMSIInstallers"
-Write-Host "NotExistedMSIInstallers $NotExistedMSIInstallers"
+Write-Host "`nMSI products count : $(0 + $MSICount)"
+Write-Host "Existed *.msi      : $(0 + $ExistedMSI)"
+Write-Host "Not existed *.msi  : $(0 + $NotExistedMSI)"
 $MasterHashs 
 }
 

@@ -32,7 +32,7 @@ EnableComputerRestore $Env:SystemDrive #turn on system restore
 .\TS_Wow64Detect.ps1 
 .\TS_MissingPatchCache.ps1 
 .\TS_RapidProductRemoval.ps1 $InstallORUninstall_Return 
-pause
+#pause
 
 get-date | Out-File ".\TS_HAS_RAN.Mark"
 # SIG # Begin signature block
